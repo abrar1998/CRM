@@ -1,0 +1,51 @@
+﻿<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Home</title>
+    <!-- CSS files -->
+    <link href="~/template/css/tabler.min.css?1692870487" rel="stylesheet"/>
+    <link href="~/template/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
+    <link href="~/template/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
+    <link href="~/template/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
+    <link href="~/template/css/demo.min.css?1692870487" rel="stylesheet"/>
+    <style>
+     
+      body {
+      	font-feature-settings: "cv03", "cv04", "cv11";
+      }
+    </style>
+  </head>
+  <body  class=" d-flex flex-column">
+    <script src="~/template/js/demo-theme.min.js?1692870487"></script>
+    <div class="page page-center text-center" id="spinner">
+      <div class="container container-slim py-4 mt-5">
+        <div class="text-center mt-5">
+          <div class="mb-3">
+            <a href="."  class="navbar-brand navbar-brand-autodark"><img src="~/template/static/logo-small.svg" height="36" alt=""></a>
+          </div>
+          <div class="text-secondary mb-3">Preparing application</div>
+          <div class="progress progress-sm">
+            <div class="progress-bar progress-bar-indeterminate"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script src="~template/js/tabler.min.js?1692870487" defer></script>
+    <script src="~template/js/demo.min.js?1692870487" defer></script>
+  </body>
+</html>
+
+<script>
+  
+    $(document).ready(function(){
+        setTimeout(() => {
+            $('#spinner').fadeOut();
+        },4000);
+
+        
+    });
+</script>

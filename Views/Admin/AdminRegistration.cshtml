@@ -1,0 +1,190 @@
+﻿@model CRM.Models.Dto.AdminViewModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="~/css/EmployeeReg.css" />
+</head>
+<body>
+    <div class="form-container">
+        <h2>Admin Registration</h2>
+        <form id="registrationForm" asp-action="AdminRegistration" asp-controller="Admin" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <i class="fas fa-user input-icon"></i>
+                    <input asp-for="Name" class="form-control" type="text" id="fullName" placeholder="Enter your full name" required>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input asp-for="Email" class="form-control" type="email" id="email" placeholder="Enter your email" required>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+           @*  <div class="form-row">
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <i class="fas fa-building input-icon"></i>
+                    <select asp-for="EmployeeDesignation" class="form-control" id="department" required>
+                        <option value="">Select your department</option>
+                        <option value="IT">IT</option>
+                        <option value="HR">HR</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Marketing">Marketing</option>
+                    </select>
+                    <span asp-validation-for="EmployeeDesignation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="joiningDate">Joining Date</label>
+                    <i class="fas fa-calendar-alt input-icon"></i>
+                    <input asp-for="JoiningDate" class="form-control" type="date" id="joiningDate">
+                    <span asp-validation-for="JoiningDate" class="text-danger"></span>
+                </div>
+            </div> *@
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="profilePicture">Profile Picture</label>
+                    <input asp-for="AdminPhoto" class="form-control" type="file" id="profilePicture" accept="image/*" required onchange="previewImage(event)" />
+                    <span asp-validation-for="AdminPhoto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" type="text" id="phoneNumber" placeholder="Enter your phone number" required />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width: 150px; height: auto;" />
+                </div>
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.getElementById('imagePreview');
+                output.src = dataURL;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+@* @model CRM.Models.Dto.AdminViewModel
+
+<style>
+    body {
+        background: url('/BackgroundImages/empbg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        margin-top: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .form-container {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 50px;
+        border-radius: 1px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<div class="text-md-center">
+    <h4 class="alert alert-primary">Admin Registration</h4>
+</div>
+<div class="container-sm">
+    <div class="row justify-content-md-center">
+        <div class="col-md-8 form-container">
+
+            <form asp-action="AdminRegistration" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="PhoneNumber" class="control-label"></label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label asp-for="AdminPhoto" class="control-label"></label>
+                        <input asp-for="AdminPhoto" type="file" class="form-control" required onchange="previewImage(event)" />
+                        <span asp-validation-for="AdminPhoto" class="text-danger"></span>
+                    </div>
+                    
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width: 150px; height: auto;" />
+                    </div>
+                   
+                </div>
+
+                <br />
+
+                <div class="=row">
+                    <div class="col-md-6 form-group">
+                        <label asp-for="JoiningDate" class="control-label"></label>
+                        <input asp-for="JoiningDate" class="form-control" />
+                        <span asp-validation-for="JoiningDate" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Register" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function () {
+            var dataURL = reader.result;
+            var output = document.getElementById('imagePreview');
+            output.src = dataURL;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+</script> *@
