@@ -83,7 +83,7 @@ namespace CRM.Controllers
                     if (User.IsInRole(RolesClass.Admin))
                     {
                         var adminUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                        if(adminRepo.AdminUserExists(adminUserId))
+                        if(adminRepo.AdminUserExists(adminUserId!))
                         {
                             return RedirectToAction("AdminDashBoard", "Admin");
                         }
@@ -93,7 +93,7 @@ namespace CRM.Controllers
                     {
                          var empUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                        if(employeeRepo.EmployeeUserIdExists(empUserId))
+                        if(employeeRepo.EmployeeUserIdExists(empUserId!))
                         {
                             return RedirectToAction("EmployeeDashBoard", "Employee");
                         }
@@ -106,13 +106,13 @@ namespace CRM.Controllers
                     {
                         var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
                         
-                        if (clientRepo.ClientUserIdExists(userid))
+                        if (clientRepo.ClientUserIdExists(userid!))
                         {
                             return RedirectToAction("ClientDashBoard", "Client");
                         }
                         else
                         {
-                            return RedirectToAction("StudentRegistration", "Student");
+                            return RedirectToAction("ClientRegistration", "Client");
                         }
                     }
                     else

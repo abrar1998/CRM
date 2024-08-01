@@ -1,4 +1,6 @@
-﻿
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using Microsoft.AspNetCore.Http
+
 <!doctype html>
 
 <html lang="en">
@@ -21,7 +23,7 @@
     </style>
   </head>
   <body >
-    <script src="./dist/js/demo-theme.min.js?1692870487"></script>
+    @* <script src="~/template/js/demo-theme.min.js?1692870487"></script> *@
     <div class="page">
       <!-- Sidebar -->
       <aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent">
@@ -411,17 +413,17 @@
 
                                     @{
                                         // Access HttpContext through the Context property
-                                        var adminPhoto = Context.Items["adminphoto"] as string;
-                                        var adminName = Context.Items["adminName"] as string;
+                                        var employeeName = Context.Items["userName"] as string;
+                                        var employeePhoto = Context.Items["userPhoto"] as string;
 
                                         // // Ensure the path is correctly resolved as a URL
-                                        var adminPhotoUrl = Url.Content($"~/Images/{adminPhoto}");
+                                        var employeePhotoUrl = Url.Content($"~/Images/{employeePhoto}");
 
                                     }
-                                    <span class="avatar avatar-sm" style="background-image: url('@adminPhotoUrl')"></span>
+                                    <span class="avatar avatar-sm" style="background-image: url('@employeePhotoUrl')"></span>
                                     <div class="d-xl-block ps-2">
 
-                                        <div class="text-red">@adminName</div>
+                                        <div class="text-red">@employeeName</div>
                                         <div class="mt-1 small">Client </div>
                                     </div>
                                 </a>

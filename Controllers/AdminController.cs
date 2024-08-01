@@ -3,6 +3,7 @@ using CRM.Models.Domain;
 using CRM.Models.Dto;
 using CRM.Models.Registration;
 using CRM.Repositories.AdminRepository;
+using CRM.Repositories.ClientRepository;
 using CRM.Repositories.EmployeeRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,14 +18,16 @@ namespace CRM.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly IAdminRepo adminRepo;
         private readonly IEmployeeRepo employeeRepo;
+        private readonly IClientRepo clientRepo;
 
         public AdminController(DataContext dataContext, IWebHostEnvironment webHostEnvironment,
-            IAdminRepo adminRepo, IEmployeeRepo employeeRepo)
+            IAdminRepo adminRepo, IEmployeeRepo employeeRepo, IClientRepo clientRepo)
         {
             this.dataContext = dataContext;
             this.webHostEnvironment = webHostEnvironment;
             this.adminRepo = adminRepo;
             this.employeeRepo = employeeRepo;
+            this.clientRepo = clientRepo;
         }
         public IActionResult AdminDashBoard()
         {
@@ -123,7 +126,7 @@ namespace CRM.Controllers
         //file upload
         private string UploadFile(AdminViewModel avm)
         {
-            string filename = null;
+            string filename = null!;
             if (avm.AdminPhoto != null && avm.AdminPhoto.Length < 1048576)
             {
                 string filedir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
@@ -145,7 +148,7 @@ namespace CRM.Controllers
                 var employeesList = await employeeRepo.GetAllEmployees();
                 if (employeesList == null) 
                 {
-                    return NotFound();
+                    return RedirectToAction("NoEmployeeFound");
                 }
                 return View(employeesList);
             }
@@ -175,7 +178,51 @@ namespace CRM.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllClients()
         {
+            try
+            {
+                var _clientData = await clientRepo.GetAllClientAsync();
+                if (_clientData.Any()) // Prefer using Any() over Count() for performance
+                {
+                    return View(_clientData);
+                }
+                else
+                {
+                    return RedirectToAction("NoClientFound");
+                }
+            }
+            catch (Exception exp)
+            {
+                return BadRequest($"Please contact Developer \n {exp.Message}");
+            }
+        }
+
+        //get single client
+        public async Task<IActionResult> GetClientDetails(Guid id)
+        {
+            try
+            {
+                var data = await clientRepo.GetClientAsync(id);
+                return View(data);
+            }
+            catch(Exception exp)
+            {
+                return BadRequest("Failed to load \n" + exp.Message);
+            }
+        }
+
+        //no client found view
+        public IActionResult NoClientFound()
+        {
+            return View(); 
+        }
+
+        //no employee found view
+
+        public IActionResult NoEmployeeFound()
+        {
             return View();
         }
+
+
     }
 }

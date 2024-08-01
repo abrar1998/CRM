@@ -22,7 +22,7 @@
     </style>
   </head>
   <body >
-    <script src="~/template/js/demo-theme.min.js?1692870487"></script>
+    @* <script src="~/template/js/demo-theme.min.js?1692870487"></script> *@
     <div class="page">
       <!-- Sidebar -->
       <aside class="navbar navbar-vertical navbar-expand-lg navbar-transparent">
@@ -399,10 +399,10 @@
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   <a href="#" class="dropdown-item">Status</a>
                   <a href="./profile.html" class="dropdown-item">Profile</a>
-                  <a href="#" class="dropdown-item">Feedback</a>
+                  @* <a href="#" class="dropdown-item">Feedback</a> *@
                   <div class="dropdown-divider"></div>
-                  <a href="./settings.html" class="dropdown-item">Settings</a>
-                  <a href="./sign-in.html" class="dropdown-item">Logout</a>
+                  @* <a href="./settings.html" class="dropdown-item">Settings</a> *@
+                  <a asp-action="LogoutUser" asp-controller="Account" class="dropdown-item">Logout</a>
                 </div>
               </div>
             </div>

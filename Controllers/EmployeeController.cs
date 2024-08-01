@@ -113,7 +113,7 @@ namespace CRM.Controllers
 
 
 
-
+        //upload photo
         private string UploadFile(EmployeeViewModel evm)
         {
             string filename = null;

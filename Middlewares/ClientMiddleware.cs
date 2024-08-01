@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CRM.Repositories.ClientRepository;
+using CRM.Repositories.EmployeeRepository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CRM.Middlewares
@@ -16,11 +19,39 @@ namespace CRM.Middlewares
             this.serviceScopeFactory = serviceScopeFactory;
         }
 
-        public Task Invoke(HttpContext httpContext)
+
+
+        public async Task Invoke(HttpContext httpContext)
         {
 
-            return _next(httpContext);
+            if (httpContext.User.Identity!.IsAuthenticated)
+            {
+                var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    var clientRepo = scope.ServiceProvider.GetRequiredService<IClientRepo>();
+                    var clientDetails = await clientRepo.GetCurrentClientDetails(userId!);
+
+                    if (clientDetails != null)
+                    {
+                        httpContext.Items["userName"] = clientDetails.Name;
+                        httpContext.Items["userPhoto"] = clientDetails.PhotoPath;
+                    }
+                    else
+                    {
+                        // Handle cases where the user is not an admin, if necessary.
+                        // For example, you might want to set default values or handle other roles.
+                        httpContext.Items["userName"] = "Unknown";
+                        httpContext.Items["userPhoto"] = "/path/to/default/photo.png"; // Default photo path
+                    }
+                }
+            }
+
+            await _next(httpContext);
         }
+
+
     }
 
     // Extension method used to add the middleware to the HTTP request pipeline.

@@ -498,6 +498,7 @@ D:\C-Sharp\CRM\obj\Debug\net8.0\CRM.csproj.CoreCompileInputs.cache
 D:\C-Sharp\CRM\obj\Debug\net8.0\CRM.MvcApplicationPartsAssemblyInfo.cache
 D:\C-Sharp\CRM\obj\Debug\net8.0\CRM.RazorAssemblyInfo.cache
 D:\C-Sharp\CRM\obj\Debug\net8.0\CRM.RazorAssemblyInfo.cs
+D:\C-Sharp\CRM\obj\Debug\net8.0\CRM.sourcelink.json
 D:\C-Sharp\CRM\obj\Debug\net8.0\staticwebassets.build.json
 D:\C-Sharp\CRM\obj\Debug\net8.0\staticwebassets.development.json
 D:\C-Sharp\CRM\obj\Debug\net8.0\staticwebassets\msbuild.CRM.Microsoft.AspNetCore.StaticWebAssets.props
