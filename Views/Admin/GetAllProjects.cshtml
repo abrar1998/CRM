@@ -1,0 +1,92 @@
+﻿@using CRM.Models.Registration
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+@model IEnumerable<CRM.Models.Domain.Project>
+
+@{
+    ViewData["Title"] = "GetAllProjects";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-header d-print-none">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <h2 class="page-title">
+                        All Projects
+                    </h2>
+                </div>
+                <div class="col-auto ms-auto d-print-none">
+                    <div class="d-flex">
+                        <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search Projects..." />
+                        <a asp-action="RegisterProject" asp-controller="Admin" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+                            New Project
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <div class="container-xl">
+                <div class="row row-cards">
+                    @foreach (var project in Model)
+                    {
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="card card-sm">
+                                <a href="#" class="d-block">
+                                    <img src="~/Images/@project.ProjectPhotoPath" class="img-fluid rounded mt-1 fixed-image" style="max-height: 300px; max-width: 290px;" alt="Project Photo">
+                                </a>
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <a href="#">@project.ProjectName</a>
+                                           @*  <div class="text-secondary">
+                                                
+                                                @project.ProjectCompanyName
+                                            </div> *@
+                                        </div>
+                                     @if(User.IsInRole(RolesClass.Admin))
+                                        {
+                                            <div class="ms-auto">
+                                                <div class="text-muted">
+                                                    @if (project.EmployeeProjects.Count > 0)
+                                                    {
+                                                        <div class="text-red">Team Deployed</div>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="text-red">No Team Deployed</div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="mt-3">
+                                        <a href="@Url.Action("ProjectDetails", "Project", new { projectId = project.ProjectId })" class="btn btn-info btn-sm">Details</a>
+                                        <a href="@Url.Action("ManageProject",  "Admin", new { projectId = project.ProjectId })" class="btn btn-secondary btn-sm">Manage Project</a>
+                                        <a href="@Url.Action("ProjectCompletionPercentage",  "Project", new { projectId = project.ProjectId })" class="btn btn-success btn-sm">Check Project Progress</a>
+                                       
+                                    </div>
+                                    <div class="mt-3">
+                                        @if(project.ProjectStatus == 1)
+                                        {
+                                            <a href="@Url.Action("ProjectDeactivatee", "Project", new { projectId = project.ProjectId })" class="btn btn-warning btn-sm">Deactivate Project</a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ProjectAactivatee", "Project", new { projectId = project.ProjectId })" class="btn btn-primary btn-sm">Activate Project</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

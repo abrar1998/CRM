@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "NoProjectsFound";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Project Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
+        }
+
+        .warning-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .warning-container i {
+                font-size: 48px;
+                color: #ff6b6b;
+                margin-bottom: 10px;
+            }
+
+            .warning-container h1 {
+                font-size: 24px;
+                color: #333;
+            }
+
+            .warning-container p {
+                font-size: 18px;
+                color: #666;
+            }
+
+            .warning-container a {
+                color: #007bff;
+                text-decoration: none;
+            }
+
+                .warning-container a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-container">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h1>No Completed Project Found</h1>
+            <p>It appears there are no Projects registered in the database. Please try again later or contact support if you think this is an error.</p>
+            <a href="@Url.Action("AdminDashBoard", "Admin")">Go back to the homepage</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,6 +1,40 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<script type="text/javascript">
+		window.onload = function () {
+			var chart = new CanvasJS.Chart("chartContainer", {
+				title: {
+					text: "Formatting Percent Values"
+				}, axisY: {
+					percentFormatString: "#0.##"
+				},
+				data: [
+					{
+						type: "column",
+						indexLabel: "{y}%",
+						percentFormatString: "#0.##",
+						toolTipContent: "{y} (#percent%)",
+						dataPoints: [
+							{ y: 71 },
+							{ y: 55 },
+							{ y: 50 },
+							{ y: 65 },
+							{ y: 95 },
+							{ y: 68 },
+							{ y: 28 },
+							{ y: 34 },
+							{ y: 14 }
+						]
+					}
+				]
+			});
+			chart.render();
+		}
+	</script>
+	<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</head>
+<body>
+	<div id="chartContainer" style="width: 100%; height: 300px"></div>
+</body>
+</html> 

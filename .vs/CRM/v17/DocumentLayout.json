@@ -3,28 +3,8 @@
   "WorkspaceRootPath": "D:\\C-Sharp\\CRM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\views\\shared\\_admin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:views\\shared\\_admin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\views\\admin\\getclientdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:views\\admin\\getclientdetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\repositories\\clientrepository\\clientrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:repositories\\clientrepository\\clientrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\views\\admin\\getallclients.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:views\\admin\\getallclients.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\views\\admin\\noclientfound.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:views\\admin\\noclientfound.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|d:\\c-sharp\\crm\\controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DACFE66A-5B57-4D72-BB99-931EDEC8362B}|CRM.csproj|solutionrelative:controllers\\employeecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,80 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_Admin.cshtml",
-              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Views\\Shared\\_Admin.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Admin.cshtml",
-              "ToolTip": "D:\\C-Sharp\\CRM\\Views\\Shared\\_Admin.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Admin.cshtml",
-              "ViewState": "AQIAAF0BAAAAMDMzMzMrwG4BAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-01T17:45:33.295Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GetClientDetails.cshtml",
-              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Views\\Admin\\GetClientDetails.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\GetClientDetails.cshtml",
-              "ToolTip": "D:\\C-Sharp\\CRM\\Views\\Admin\\GetClientDetails.cshtml",
-              "RelativeToolTip": "Views\\Admin\\GetClientDetails.cshtml",
-              "ViewState": "AQIAACkAAACAZmZmZmYvwDcAAABHAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-01T17:38:01.755Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "GetAllClients.cshtml",
-              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Views\\Admin\\GetAllClients.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\GetAllClients.cshtml",
-              "ToolTip": "D:\\C-Sharp\\CRM\\Views\\Admin\\GetAllClients.cshtml",
-              "RelativeToolTip": "Views\\Admin\\GetAllClients.cshtml",
-              "ViewState": "AQIAAC4AAAAANDMzMzMLwEAAAABGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-01T17:10:12.37Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ClientRepo.cs",
-              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Repositories\\ClientRepository\\ClientRepo.cs",
-              "RelativeDocumentMoniker": "Repositories\\ClientRepository\\ClientRepo.cs",
-              "ToolTip": "D:\\C-Sharp\\CRM\\Repositories\\ClientRepository\\ClientRepo.cs",
-              "RelativeToolTip": "Repositories\\ClientRepository\\ClientRepo.cs",
-              "ViewState": "AQIAABoAAAAAMzMzMzMpwCkAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-01T16:43:56.379Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "NoClientFound.cshtml",
-              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Views\\Admin\\NoClientFound.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\NoClientFound.cshtml",
-              "ToolTip": "D:\\C-Sharp\\CRM\\Views\\Admin\\NoClientFound.cshtml",
-              "RelativeToolTip": "Views\\Admin\\NoClientFound.cshtml",
-              "ViewState": "AQIAAC0AAAAAAAAAAAAmwEsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-01T16:03:14.351Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
-              "ToolTip": "D:\\C-Sharp\\CRM\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AQIAAHoAAAAAAAAAAAAEwIAAAAAjAAAA",
+              "Title": "EmployeeController.cs",
+              "DocumentMoniker": "D:\\C-Sharp\\CRM\\Controllers\\EmployeeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EmployeeController.cs",
+              "ToolTip": "D:\\C-Sharp\\CRM\\Controllers\\EmployeeController.cs",
+              "RelativeToolTip": "Controllers\\EmployeeController.cs",
+              "ViewState": "AQIAANcAAAAAAAAAAAAAANcAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-01T15:57:41.391Z",
+              "WhenOpened": "2024-08-07T10:01:35.191Z",
               "EditorCaption": ""
             }
           ]

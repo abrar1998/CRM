@@ -17,7 +17,6 @@ namespace CRM.Models.Domain
         public string PhotoPath { get; set; } // Path to the client photo
         public DateOnly? JoiningDate { get; set; }
 
-        //creating relation with project table so that we can assign project to client also
         public ICollection<Project> Projects { get; set; } // Navigation property for related projects
 
         //creating relationship with user table

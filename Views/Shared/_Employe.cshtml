@@ -183,12 +183,12 @@
                   <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
 
-                      <a class="dropdown-item" href="employeespanel-ongoingprojects.html">
+                      <a class="dropdown-item" asp-action="EmpOngoingProjects" asp-controller="Employee">
                         Ongoing Project
                       </a>
                     </div>
                     <div class="dropdown-menu-column">
-                      <a class="dropdown-item" href="employeespanel-compeletedprojects.html">
+                    <a class="dropdown-item" asp-action="EmpCompletedProjects" asp-controller="Employee">
                         Completed Projects
                       </a>
                     </div>
@@ -430,23 +430,8 @@
           </div>
         </div>
  
-        @RenderBody();
-
-              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                <ul class="list-inline list-inline-dots mb-0">
-                  <li class="list-inline-item">
-                    Copyright &copy; 2023
-                    <a href="privacy.html" class="link-secondary">Sourch Technologies Pvt. Ltd.</a>.
-                    All rights reserved.
-                  </li>
-
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
+        @RenderBody()
+      
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -550,10 +535,10 @@
       </div>
     </div>
     <!-- Libs JS -->
-    <script src="~/template/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
+ @*    <script src="~/template/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
     <script src="~/template/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
     <script src="~/template/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
-    <script src="~/template/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script>
+    <script src="~/template/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script> *@
     <script src="~/template/js/tabler.min.js?1692870487" defer></script>
     <script src="~/template/js/demo.min.js?1692870487" defer></script>
     <script>
@@ -830,7 +815,7 @@
       });
      
     </script>
-    <script>
+   @*  <script>
       
       document.addEventListener("DOMContentLoaded", function() {
       	const map = new jsVectorMap({
@@ -857,7 +842,7 @@
       	});
       });
      
-    </script>
+    </script> *@
     <script>
      
       document.addEventListener("DOMContentLoaded", function () {

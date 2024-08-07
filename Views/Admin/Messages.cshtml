@@ -1,0 +1,109 @@
+﻿@* @model YourNamespace.ViewModels.MessagesViewModel
+
+@{
+    ViewData["Title"] = "Messages";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Clients Section -->
+        <div class="col-lg-6">
+            <h2 class="mb-4" style="color: #3498db;">Client Messages</h2>
+            @foreach (var message in Model.ClientMessages)
+            {
+                <div class="card mb-3 shadow border-0">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #2c3e50;">@message.Subject</h5>
+                        <p class="card-text">@message.Content</p>
+                        <small class="text-muted">From: @message.SenderName, @message.DateSent.ToString("g")</small>
+                        <button class="btn btn-primary mt-3 reply-btn" data-toggle="modal" data-target="#replyModal" data-message-id="@message.Id" data-recipient="client">Reply</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Employees Section -->
+        <div class="col-lg-6">
+            <h2 class="mb-4" style="color: #2ecc71;">Employee Messages</h2>
+            @foreach (var message in Model.EmployeeMessages)
+            {
+                <div class="card mb-3 shadow border-0">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: #2c3e50;">@message.Subject</h5>
+                        <p class="card-text">@message.Content</p>
+                        <small class="text-muted">From: @message.SenderName, @message.DateSent.ToString("g")</small>
+                        <button class="btn btn-primary mt-3 reply-btn" data-toggle="modal" data-target="#replyModal" data-message-id="@message.Id" data-recipient="employee">Reply</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Reply Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" role="dialog" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="replyModalLabel">Reply to Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="replyForm">
+                    <div class="form-group">
+                        <label for="replyContent">Your Reply</label>
+                        <textarea class="form-control" id="replyContent" rows="4" required></textarea>
+                        <div class="invalid-feedback">
+                            Please enter your reply.
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="sendReplyBtn">Send Reply</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        $(document).ready(function () {
+            var messageId, recipientType;
+
+            $('.reply-btn').click(function () {
+                messageId = $(this).data('message-id');
+                recipientType = $(this).data('recipient');
+            });
+
+            $('#sendReplyBtn').click(function () {
+                var replyContent = $('#replyContent').val();
+
+                if (!replyContent.trim()) {
+                    $('#replyContent').addClass('is-invalid');
+                    return;
+                }
+
+                $('#replyContent').removeClass('is-invalid');
+
+                $.ajax({
+                    url: '@Url.Action("SendReply", "Messages")',
+                    type: 'POST',
+                    data: {
+                        messageId: messageId,
+                        recipientType: recipientType,
+                        content: replyContent
+                    },
+                    success: function (response) {
+                        $('#replyModal').modal('hide');
+                        swal("Success!", "Your reply has been sent.", "success");
+                    },
+                    error: function (xhr, status, error) {
+                        swal("Error!", "There was a problem sending your reply. Please try again.", "error");
+                    }
+                });
+            });
+        });
+    </script>
+
+ *@

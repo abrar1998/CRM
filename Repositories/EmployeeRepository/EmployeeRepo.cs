@@ -37,7 +37,7 @@ namespace CRM.Repositories.EmployeeRepository
         //get details of current logged in employee
         public async Task<Employee> GetEmployeeDetails(string userId)
         {
-            var details = await dbcontext.EmployeesTable.FirstOrDefaultAsync(e=>e.Emp_UserId == userId);
+            var details = await dbcontext.EmployeesTable.Include(e=>e.EmployeeProjects).FirstOrDefaultAsync(e=>e.Emp_UserId == userId);
             return details!;
         }
 

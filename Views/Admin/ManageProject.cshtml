@@ -1,0 +1,470 @@
+﻿
+@model CRM.Models.Dto.AssignEmployeesViewModel
+
+@{
+    ViewData["Title"] = "ManageProject";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<link href="~/css/NewSpinner.css" />
+<div class="container py-4">
+    <div class="text-center mb-4">
+        <h2>Manage Project Roles for: <strong>@Model.ProjectName</strong></h2>
+    </div>
+
+    
+      
+   
+
+    
+
+    <div class="row g-4">
+        <!-- Assign Project Team Form -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-3">Assign Project Team</h3>
+                    <form id="assignEmployeesForm" novalidate>
+                        <div class="form-group mb-4">
+
+                            <label for="employees" class="form-label">Select Project Team:</label>
+                            <select id="employees" class="form-control form-select" multiple required>
+                                @foreach (var employee in Model.Employees)
+                                {
+                                    <option value="@employee.EmployeeId">@employee.Name</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select any option.
+                            </div>
+                        </div>
+                        <button type="button" id="assignEmployeesButton" class="btn btn-primary w-100">Assign Employees</button>
+
+                        <!-- spinner start-->
+                        <div class="terminal-loader" id="assignTeam">
+                            <div class="terminal-header">
+                                <div class="terminal-title">Status</div>
+                                <div class="terminal-controls">
+                                    <div class="control close"></div>
+                                    <div class="control minimize"></div>
+                                    <div class="control maximize"></div>
+                                </div>
+                            </div>
+                            <div class="text">Deploying <br /> Team...</div>
+                        </div>
+                        <!-- spinner end-->
+                    </form>
+                    <div id="employeesMessage" class="mt-3"></div>
+                </div>
+            </div>
+      
+        </div>
+
+        <!-- spinner-->
+ 
+
+        <!-- Assign Project Manager Form -->
+        <div class="col-lg-6">
+            @if(Model.ProjectManagerIdExists)
+            {
+                <!-- Unassign Project Manager Block -->
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-3">Current Project Manager</h3>
+                        <p class="text-center"><b>@Model.ProjectManagerName</b></p>
+                        <button type="button" id="unassignManagerButton" class="btn btn-danger w-100">Unassign Project Manager</button>
+                        <div class="terminal-loader" id="unassignManager">
+                            <div class="terminal-header">
+                                <div class="terminal-title">Status</div>
+                                <div class="terminal-controls">
+                                    <div class="control close"></div>
+                                    <div class="control minimize"></div>
+                                    <div class="control maximize"></div>
+                                </div>
+                            </div>
+                            <div class="text">Unassigning <br /> Manager...</div>
+                        </div>
+                        <div id="unassignManagerMessage" class="mt-3"></div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-3">Assign Project Manager</h3>
+                        <form id="assignManagerForm">
+                            <div class="form-group mb-4">
+
+                                <label for="manager" class="form-label">Select Project Manager:</label>
+                                <select id="manager" class="form-control form-select" required>
+                                    <option value="">Select Manager</option>
+                                    @foreach (var employee in Model.Employees)
+                                    {
+                                        <option value="@employee.EmployeeId">@employee.Name</option>
+                                    }
+                                </select>
+                                <div class="invalid-feedback">
+                                    Please select any option.
+                                </div>
+                            </div>
+                            <button type="button" id="assignManagerButton" class="btn btn-primary w-100">Assign Project Manager</button>
+                            <!-- spinner start-->
+                            <div class="terminal-loader" id="assignManager">
+                                <div class="terminal-header">
+                                    <div class="terminal-title">Status</div>
+                                    <div class="terminal-controls">
+                                        <div class="control close"></div>
+                                        <div class="control minimize"></div>
+                                        <div class="control maximize"></div>
+                                    </div>
+                                </div>
+                                <div class="text">Deploying <br /> Manager...</div>
+                            </div>
+                            <!-- spinner end-->
+                        </form>
+                        <div id="managerMessage" class="mt-3"></div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row mt-5 mb-5">
+
+      <div class="col-lg-6">
+            <!-- Unassign team -->
+           
+
+        @if(Model.ProjectClientExists)
+        {
+             <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-3">Current Project Client</h3>
+                    <p class="text-center"><b>@Model.ProjectClientName</b></p>
+                    <button type="button" id="unassignClientButton" class="btn btn-danger w-100">Unassign Project Client</button>
+                    <div class="terminal-loader" id="unassignClient">
+                        <div class="terminal-header">
+                            <div class="terminal-title">Status</div>
+                            <div class="terminal-controls">
+                                <div class="control close"></div>
+                                <div class="control minimize"></div>
+                                <div class="control maximize"></div>
+                            </div>
+                        </div>
+                        <div class="text">Unassigning <br /> Manager...</div>
+                    </div>
+                    <div id="unassignManagerMessage" class="mt-3"></div>
+                </div>
+            </div>
+        
+
+        }
+        else
+        {
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-3">Assign Project Client</h3>
+                    <form id="assignClientForm">
+                        <div class="form-group mb-4">
+
+                            <label for="client" class="form-label">Select Project Client:</label>
+                            <select id="client" class="form-control form-select" required>
+                                <option value="">Select Client</option>
+                                @foreach (var client in Model.Clients)
+                                {
+                                    <option value="@client.ClientId">@client.Name</option>
+                                }
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select any option.
+                            </div>
+                        </div>
+                        <button type="button" id="assignClientButton" class="btn btn-primary w-100">Assign Project Client</button>
+                        <!-- spinner start-->
+                        <div class="terminal-loader" id="assignClient">
+                            <div class="terminal-header">
+                                <div class="terminal-title">Status</div>
+                                <div class="terminal-controls">
+                                    <div class="control close"></div>
+                                    <div class="control minimize"></div>
+                                    <div class="control maximize"></div>
+                                </div>
+                            </div>
+                            <div class="text">Deploying...</div>
+                        </div>
+                        <!-- spinner end-->
+                    </form>
+                    <div id="clientMessage" class="mt-3"></div>
+                </div>
+            </div>
+        }
+       </div>
+
+        <div class="col-lg-6">
+        @if(Model.TeamExists)
+        {
+           
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title text-center mb-3">You have already deployed team on current project</h3>
+                        <p class="text-center"><b>You can also all more or unassing all team from current project</b></p>
+                        <button type="button" id="unassignTeamButton" class="btn btn-danger w-100">Click here to Unassign</button>
+                        <div class="terminal-loader" id="unassignTeam">
+                            <div class="terminal-header">
+                                <div class="terminal-title">Status</div>
+                                <div class="terminal-controls">
+                                    <div class="control close"></div>
+                                    <div class="control minimize"></div>
+                                    <div class="control maximize"></div>
+                                </div>
+                            </div>
+                            <div class="text">Unassigning <br /> Team...</div>
+                        </div>
+                        <div id="unassignManagerMessage" class="mt-3"></div>
+                    </div>
+                </div>
+            
+        }
+        
+        </div>
+      
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#assignTeam').hide();
+        $('#assignManager').hide();
+        $('#unassignManager').hide();
+        $('#assignClient').hide();
+        $('#unassignClient').hide();
+        $('#unassignTeam').hide();
+
+        $('#assignEmployeesButton').click(function () {
+            // Check form validity
+            if ($('#assignEmployeesForm')[0].checkValidity()) {
+                // Show loading spinner or any indicator
+                $('#assignTeam').show();
+
+                var selectedEmployees = $('#employees').val();
+                var projectId = '@Model.ProjectId';
+
+                $.ajax({
+                    url: '@Url.Action("AssignEmployees", "Admin")',
+                    type: 'POST',
+                    data: {
+                        projectId: projectId,
+                        employeeIds: selectedEmployees
+                    },
+                    success: function (response) {
+                        $('#assignTeam').hide();// hide spinner
+                        swal("Thank You!", "Team Assigned Successfully!", "success", {
+                            button: "Ok!",
+                        });
+                        setTimeout(() => {
+                            location.reload(); // Reload the page to reflect changes
+                        }, 2000);
+                    },
+                    error: function (xhr, status, error) {
+                        swal({
+                            title: "Error!",
+                            text: "An unexpected error occurred",
+                            icon: "warning",
+                            button: "Cancel!",
+                        });
+                    }
+                });
+            } else {
+                // If the form is invalid, add Bootstrap validation class
+                $('#assignEmployeesForm').addClass('was-validated');
+            }
+        });
+
+
+        $('#assignManagerButton').click(function () {
+            var form = $('#assignManagerForm')[0];
+
+            if (form.checkValidity()) {
+                $('#assignManager').show();
+                var selectedManager = $('#manager').val();
+                var projectId = '@Model.ProjectId';
+
+                $.ajax({
+                    url: '@Url.Action("AssignProjectManager", "Admin")',
+                    type: 'POST',
+                    data: {
+                        projectId: projectId,
+                        projectManagerId: selectedManager
+                    },
+                    success: function (response) {
+                       // $('#managerMessage').html('<div class="alert alert-success">Project manager assigned successfully!</div>');
+                        swal("Thank You!", "Project Manager Assigned Successfully!", "success", {
+                            button: "Ok!",
+                        });
+                        $('#assignManager').hide();
+                            setTimeout(() => {
+                                location.reload(); // Reload the page to reflect changes
+                            }, 2000);
+                    },
+                    error: function (xhr, status, error) {
+                       // $('#managerMessage').html('<div class="alert alert-danger">An error occurred: ' + error + '</div
+                        swal({
+                            title: "Error!",
+                            text: "An unexpected error occurred",
+                            icon: "warning",
+                            button: "Cancel!",
+                        });
+                        $('#assignManager').hide();
+                    }
+                });
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+
+        //unassign project manager
+        $('#unassignManagerButton').click(function () {
+            $('#unassignManager').show();
+            var projectId = '@Model.ProjectId';
+
+            $.ajax({
+                url: '@Url.Action("UnassignProjectManager", "Admin")', // Ensure this is correct
+                type: 'POST',
+                data: {
+                    projectId: projectId
+                },
+                success: function (response) {
+                    swal("Thank You!", "Project Manager Unassigned Successfully!", "success", {
+                        button: "Ok!",
+                    });
+                    $('#unassignManager').hide();
+                        setTimeout(() => {
+                            location.reload(); // Reload the page to reflect changes
+                        }, 2000);
+                },
+                error: function (xhr, status, error) {
+                    swal({
+                        title: "Error!",
+                        text: "An unexpected error occurred",
+                        icon: "warning",
+                        button: "Cancel!",
+                    });
+                    $('#unassignManager').hide();
+                }
+            });
+        });
+
+        //assign project client
+
+        $('#assignClientButton').click(function () {
+                var form = $('#assignClientForm')[0];
+
+            if (form.checkValidity()) {
+                $('#assignClient').show();
+                var selectedClient = $('#client').val();
+                var projectId = '@Model.ProjectId';
+
+                $.ajax({
+                    url: '@Url.Action("AssignProjectClient", "Admin")',
+                    type: 'POST',
+                    data: {
+                        projectId: projectId,
+                        projectClientId: selectedClient
+                    },
+                    success: function (response) {
+                        // $('#managerMessage').html('<div class="alert alert-success">Project manager assigned successfully!</div>');
+                        swal("Thank You!", "Project Client Assigned Successfully!", "success", {
+                            button: "Ok!",
+                        });
+                        $('#assignClient').hide();
+                            setTimeout(() => {
+                                location.reload(); // Reload the page to reflect changes
+                            }, 2000);
+                    },
+                    error: function (xhr, status, error) {
+                        // $('#managerMessage').html('<div class="alert alert-danger">An error occurred: ' + error + '</div
+                        swal({
+                            title: "Error!",
+                            text: "An unexpected error occurred",
+                            icon: "warning",
+                            button: "Cancel!",
+                        });
+                        $('#assignClient').hide();
+                    }
+                });
+            } else {
+                form.classList.add('was-validated');
+            }
+        });
+
+            //unassign project client
+            $('#unassignClientButton').click(function () {
+                $('#unassignClient').show();
+                var projectId = '@Model.ProjectId';
+
+                $.ajax({
+                    url: '@Url.Action("UnassignProjectClient", "Admin")', // Ensure this is correct
+                    type: 'POST',
+                    data: {
+                        projectId: projectId
+                    },
+                    success: function (response) {
+                        swal("Thank You!", "Project Manager Unassigned Successfully!", "success", {
+                            button: "Ok!",
+                        });
+                        $('#unassignClient').hide();
+                        setTimeout(() => {
+                            location.reload(); // Reload the page to reflect changes
+                        }, 2000);
+                    },
+                    error: function (xhr, status, error) {
+                        swal({
+                            title: "Error!",
+                            text: "An unexpected error occurred",
+                            icon: "warning",
+                            button: "Cancel!",
+                        });
+                        $('#unassignClient').hide();
+                    }
+                });
+            });
+
+            //unassigned team
+
+            $('#unassignTeamButton').click(function () {
+                $('#unassignTeam').show();
+                var projectId = '@Model.ProjectId';
+
+                $.ajax({
+                    url: '@Url.Action("UnassignProjectTeam", "Admin")', // Ensure this is correct
+                    type: 'POST',
+                    data: {
+                        projectId: projectId
+                    },
+                    success: function (response) {
+                        swal("Thank You!", "Project Manager Unassigned Successfully!", "success", {
+                            button: "Ok!",
+                        });
+                        $('#unassignTeam').hide();
+                        setTimeout(() => {
+                            location.reload(); // Reload the page to reflect changes
+                        }, 2000);
+                    },
+                    error: function (xhr, status, error) {
+                        swal({
+                            title: "Error!",
+                            text: "An unexpected error occurred",
+                            icon: "warning",
+                            button: "Cancel!",
+                        });
+                        $('#unassignTeam').hide();
+                    }
+                });
+            });
+
+    });
+</script>
+
+
+

@@ -10,12 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>SOURCH TECHNOLOGIES PVT. LTD.</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
     <!-- CSS files -->
     <link href="~/template/css/tabler.min.css?1692870487" rel="stylesheet"/>
     <link href="~/template/css/tabler-flags.min.css?1692870487" rel="stylesheet"/>
     <link href="~/template/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
     <link href="~/template/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
     <link href="~/template/css/demo.min.css?1692870487" rel="stylesheet"/>
+    <link rel="stylesheet" href="~/css/NewSpinner.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/AssignProjectSpinner.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <style>
   
       body {
@@ -262,19 +268,29 @@
                   <div class="dropdown-menu-columns">
                     <div class="dropdown-menu-column">
 
-                      <a class="dropdown-item" asp-action="OngoingProjects" asp-controller="Admin">
+                                        <a class="dropdown-item" asp-action="OnGoingProjects" asp-controller="Project">
                         Ongoing Projects
                       </a>
                     </div>
-                    <div class="dropdown-menu-column">
-                                        <a class="dropdown-item" asp-action="UpcommingProjects" asp-controller="Admin">
+                   @*  <div class="dropdown-menu-column">
+                       <a class="dropdown-item" asp-action="UpcommingProjects" asp-controller="Admin">
                         Up Coming Projects
+                      </a>
+                    </div> *@
+                    <div class="dropdown-menu-column">
+                      <a class="dropdown-item" asp-action="CompletedProjects" asp-controller="Project">
+                        Completed Projects
                       </a>
                     </div>
                     <div class="dropdown-menu-column">
-                      <a class="dropdown-item" asp-action="CompletedProjects" asp-controller="Admin">
-                        Compeleted Projects
-                      </a>
+                        <a class="dropdown-item" asp-action="GetAllProjects" asp-controller="Admin">
+                            Get All Projects
+                        </a>
+                    </div>
+                    <div class="dropdown-menu-column">
+                                        <a class="dropdown-item" asp-action="RegisterProject" asp-controller="Admin">
+                            Create Project
+                        </a>
                     </div>
                   </div>
                 </div>
@@ -380,6 +396,7 @@
       </div>
     </div>
     <!-- Libs JS -->
+
     <script src="~/template/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
     <script src="~/template/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
     <script src="~/template/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>

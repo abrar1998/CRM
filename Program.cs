@@ -4,6 +4,7 @@ using CRM.Models.Registration;
 using CRM.Repositories.AdminRepository;
 using CRM.Repositories.ClientRepository;
 using CRM.Repositories.EmployeeRepository;
+using CRM.Repositories.ProjectRepository;
 using CRM.Repositories.RegistrationRepo;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ builder.Services.AddTransient<IAccountRepo, AccountRepo>();
 builder.Services.AddScoped<IAdminRepo, AdminRepo>();
 builder.Services.AddTransient<IEmployeeRepo, EmployeeRepo>();
 builder.Services.AddTransient<IClientRepo, ClientRepo>();
+builder.Services.AddTransient<IProjectRepo, ProjectRepo>();
 
 // Register IHttpContextAccessor if needed
 builder.Services.AddHttpContextAccessor();

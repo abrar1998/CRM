@@ -117,11 +117,12 @@ namespace CRM.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Emp_ProjectId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Emp_UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("EmployeeAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeDesignation")
                         .IsRequired()
@@ -142,11 +143,35 @@ namespace CRM.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProjectsCompleted")
+                        .HasColumnType("int");
+
                     b.HasKey("EmployeeId");
 
                     b.HasIndex("Emp_UserId");
 
                     b.ToTable("EmployeesTable");
+                });
+
+            modelBuilder.Entity("CRM.Models.Domain.EmployeeProject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("EmployeeProjectsTable");
                 });
 
             modelBuilder.Entity("CRM.Models.Domain.Project", b =>
@@ -155,33 +180,45 @@ namespace CRM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ClientId")
+                    b.Property<Guid?>("C_id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("Emp_ProjectId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProgressPercentage")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("ProjectCompanyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("ProjectDate")
                         .HasColumnType("date");
 
-                    b.Property<int?>("Year")
+                    b.Property<Guid?>("ProjectManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ProjectName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProjectPhotoPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjectStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("ProjectId");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ProjectManagerId");
 
-                    b.HasIndex("Emp_ProjectId");
-
-                    b.ToTable("Project");
+                    b.ToTable("ProjectTable");
                 });
 
             modelBuilder.Entity("CRM.Models.Domain.Sale", b =>
@@ -190,14 +227,14 @@ namespace CRM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Cl_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("Cl_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ClientId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("Emp_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("Emp_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("EmployeeId")
                         .HasColumnType("uniqueidentifier");
@@ -222,7 +259,22 @@ namespace CRM.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Sale");
+                    b.ToTable("SaleTable");
+                });
+
+            modelBuilder.Entity("ClientProject", b =>
+                {
+                    b.Property<Guid>("ProjectClientClientId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProjectsProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ProjectClientClientId", "ProjectsProjectId");
+
+                    b.HasIndex("ProjectsProjectId");
+
+                    b.ToTable("ClientProject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -250,6 +302,29 @@ namespace CRM.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "482a3ce4-ac80-4081-8441-e15354f9b70e",
+                            ConcurrencyStamp = "482a3ce4-ac80-4081-8441-e15354f9b70e",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "9c327fed-80eb-4113-8820-b11fb583122c",
+                            ConcurrencyStamp = "9c327fed-80eb-4113-8820-b11fb583122c",
+                            Name = "Employee",
+                            NormalizedName = "EMPLOYEE"
+                        },
+                        new
+                        {
+                            Id = "59d453c4-0425-4e08-a28c-0f772ef388a2",
+                            ConcurrencyStamp = "59d453c4-0425-4e08-a28c-0f772ef388a2",
+                            Name = "Client",
+                            NormalizedName = "CLIENT"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -470,23 +545,28 @@ namespace CRM.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CRM.Models.Domain.Project", b =>
+            modelBuilder.Entity("CRM.Models.Domain.EmployeeProject", b =>
                 {
-                    b.HasOne("CRM.Models.Domain.Client", "Client")
-                        .WithMany("Projects")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CRM.Models.Domain.Employee", "Employee")
-                        .WithMany("Projects")
-                        .HasForeignKey("Emp_ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("EmployeeProjects")
+                        .HasForeignKey("EmployeeId");
 
-                    b.Navigation("Client");
+                    b.HasOne("CRM.Models.Domain.Project", "Project")
+                        .WithMany("EmployeeProjects")
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("Employee");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("CRM.Models.Domain.Project", b =>
+                {
+                    b.HasOne("CRM.Models.Domain.Employee", "ProjectManager")
+                        .WithMany("ManagedProjects")
+                        .HasForeignKey("ProjectManagerId");
+
+                    b.Navigation("ProjectManager");
                 });
 
             modelBuilder.Entity("CRM.Models.Domain.Sale", b =>
@@ -506,6 +586,21 @@ namespace CRM.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("ClientProject", b =>
+                {
+                    b.HasOne("CRM.Models.Domain.Client", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectClientClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CRM.Models.Domain.Project", null)
+                        .WithMany()
+                        .HasForeignKey("ProjectsProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -561,16 +656,21 @@ namespace CRM.Migrations
 
             modelBuilder.Entity("CRM.Models.Domain.Client", b =>
                 {
-                    b.Navigation("Projects");
-
                     b.Navigation("Sales");
                 });
 
             modelBuilder.Entity("CRM.Models.Domain.Employee", b =>
                 {
-                    b.Navigation("Projects");
+                    b.Navigation("EmployeeProjects");
+
+                    b.Navigation("ManagedProjects");
 
                     b.Navigation("Sales");
+                });
+
+            modelBuilder.Entity("CRM.Models.Domain.Project", b =>
+                {
+                    b.Navigation("EmployeeProjects");
                 });
 #pragma warning restore 612, 618
         }

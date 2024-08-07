@@ -27,5 +27,9 @@ namespace CRM.Models.Dto
         [Required(ErrorMessage ="Please select your designation")]
         [Display(Name ="Designation")]
         public string EmployeeDesignation { get; set; }
+
+        [Required(ErrorMessage = "Please select your address")]
+        [Display(Name = "address")]
+        public string EmployeeAddress { get; set; }
     }
 }

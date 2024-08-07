@@ -17,6 +17,9 @@
 <body>
     <div class="form-container container mt-5 mb-5">
         <h2>Admin Registration</h2>
+  @*       <div id="spinner-overlay" class="spinner-overlay">
+            <div class="spinner"></div>
+        </div> *@
         <form id="registrationForm" asp-action="AdminRegistration" asp-controller="Admin" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-row">
@@ -71,7 +74,13 @@
                     <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width: 150px; height: auto;" />
                 </div>
             </div>
-            <button type="submit" class="submit-btn">Register</button>
+            <button type="submit" class="submit-btn" id="regBtn">Register</button>
+            <br />
+           <div class=" mt-2">
+                <button type="button" class="btn btn-primary">
+                    <a>Home</a>
+                </button>
+           </div>
         </form>
     </div>
 
@@ -88,104 +97,18 @@
             reader.readAsDataURL(input.files[0]);
         }
     </script>
+
+  @*   <script>
+        $(document).ready(() => {
+            $('#spinner-overlay').hide();
+            & ('#regBtn').click(() => {
+                $('#spinner-overlay').show();
+            });
+        });
+    </script> *@
 </body>
 </html>
 
 
 
 
-
-@* @model CRM.Models.Dto.AdminViewModel
-
-<style>
-    body {
-        background: url('/BackgroundImages/empbg.jpg') no-repeat center center fixed;
-        background-size: cover;
-        margin-top: 0;
-        padding: 0;
-        font-family: 'Arial', sans-serif;
-    }
-
-    .form-container {
-        background: rgba(255, 255, 255, 0.8);
-        padding: 50px;
-        border-radius: 1px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
-</style>
-
-<div class="text-md-center">
-    <h4 class="alert alert-primary">Admin Registration</h4>
-</div>
-<div class="container-sm">
-    <div class="row justify-content-md-center">
-        <div class="col-md-8 form-container">
-
-            <form asp-action="AdminRegistration" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label asp-for="Name" class="control-label"></label>
-                        <input asp-for="Name" class="form-control" />
-                        <span asp-validation-for="Name" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label asp-for="PhoneNumber" class="control-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" />
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label asp-for="AdminPhoto" class="control-label"></label>
-                        <input asp-for="AdminPhoto" type="file" class="form-control" required onchange="previewImage(event)" />
-                        <span asp-validation-for="AdminPhoto" class="text-danger"></span>
-                    </div>
-                    
-                </div>
-
-                <br />
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width: 150px; height: auto;" />
-                    </div>
-                   
-                </div>
-
-                <br />
-
-                <div class="=row">
-                    <div class="col-md-6 form-group">
-                        <label asp-for="JoiningDate" class="control-label"></label>
-                        <input asp-for="JoiningDate" class="form-control" />
-                        <span asp-validation-for="JoiningDate" class="text-danger"></span>
-                    </div>
-
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Register" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<script>
-    function previewImage(event) {
-        var input = event.target;
-        var reader = new FileReader();
-        reader.onload = function () {
-            var dataURL = reader.result;
-            var output = document.getElementById('imagePreview');
-            output.src = dataURL;
-            output.style.display = 'block';
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-</script> *@

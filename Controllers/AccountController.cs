@@ -29,7 +29,7 @@ namespace CRM.Controllers
             this.clientRepo = clientRepo;
         }
 
-       [Authorize(Roles = RolesClass.Admin)]
+       //[Authorize(Roles = RolesClass.Admin)]
         [HttpGet]
         public IActionResult RegisterUser()
         {
@@ -37,7 +37,7 @@ namespace CRM.Controllers
         }
 
         //submitting form using ajax;
-        [Authorize(Roles = RolesClass.Admin)]
+       // [Authorize(Roles = RolesClass.Admin)]
         [HttpPost]
         public async Task<IActionResult> CreateAccount(UserSignUpModel umodel)
         {

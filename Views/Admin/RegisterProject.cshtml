@@ -1,0 +1,234 @@
+﻿@model CRM.Models.Dto.ProjectViewModel
+
+@{
+    ViewData["Title"] = "RegisterProject";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="~/css/EmployeeReg.css" />
+    <link rel="stylesheet" href="~/css/ProjectSpinner.css" />
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add Project</h2>
+        @* add spinner here *@
+        <div class="spinner-overlay" id="spinner-overlay">
+            <div id="page">
+                <div id="container">
+                    <div id="ring"></div>
+                    <div id="ring"></div>
+                    <div id="ring"></div>
+                    <div id="ring"></div>
+                    <div id="h3">loading</div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <form id="regForm" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fullName">Add Project Name</label>
+                    <i class="fas fa-user input-icon"></i>
+                    <input asp-for="ProjectName" class="form-control" type="text" id="fullName" placeholder="Enter project name" required>
+                    <span asp-validation-for="ProjectName" class="text-danger"></span>
+                    <div class="invalid-feedback">
+                        Please enter project name.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input asp-for="Description" class="form-control" type="text" id="description" placeholder="Enter project description" required>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <div class="invalid-feedback">
+                        Please enter Description.
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="department">Year</label>
+                    <i class="fas fa-building input-icon"></i>
+                    <select asp-for="Year" class="form-control" id="department" required>
+                        <option value="">Select year</option>
+                        @for (int year = 2020; year <= 2035; year++)
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                    <div class="invalid-feedback">
+                        Please enter year.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ProjectCompanyName">Project Company Name</label>
+                    <input asp-for="ProjectCompanyName" class="form-control" type="text" id="ProjectCompanyName" placeholder="Enter your phone number" required />
+                    <span asp-validation-for="ProjectCompanyName" class="text-danger"></span>
+                    <div class="invalid-feedback">
+                        Please enter company name.
+                    </div>
+                </div>
+              
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="profilePicture">Project photo</label>
+                    <input asp-for="ProjectPhoto" class="form-control" type="file" id="profilePicture" accept="image/*" required onchange="previewImage(event)" />
+                    <small class="form-text text-muted">Photo should be less than 300KB.</small>
+                    <span asp-validation-for="ProjectPhoto" class="text-danger"></span>
+                    <div class="invalid-feedback">
+                        Please enter project photo less than 300kb.
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <img id="imagePreview" src="#" alt="Image Preview" style="display:none; width: 150px; height: auto;" />
+                    </div>
+                </div>
+               
+            </div>
+            <br />
+            
+            <button type="button" id="regBtn" class="submit-btn">Create</button>
+        </form>
+    </div>
+
+  
+
+
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.getElementById('imagePreview');
+                output.src = dataURL;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+        $(document).ready(() => {
+            $('#spinner-overlay').hide();
+
+            $('#regBtn').click(() => {
+                if ($('#regForm')[0].checkValidity()) {
+                    $('#spinner-overlay').show(); // Show the spinner
+
+                    // Create a FormData object from the form element
+                    var formData = new FormData($('#regForm')[0]);
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("AddCourse", "Admin")",
+                        data: formData,
+                        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+                        contentType: false, // Prevent jQuery from setting the Content-Type header
+                        success: function (response) {
+                            $('#spinner-overlay').hide(); // Hide the spinner
+                            swal("Thank You!", "Project Created Successfully!", "success", {
+                                button: "Ok!",
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            $('#spinner-overlay').hide(); // Hide the spinner
+                            if (xhr.status === 400 && xhr.responseText) {
+                                swal({
+                                    title: "Error!",
+                                    text: xhr.responseText,
+                                    icon: "warning",
+                                    button: "Cancel!",
+                                });
+                            } else {
+                                swal({
+                                    title: "Error!",
+                                    text: "An unexpected error occurred",
+                                    icon: "warning",
+                                    button: "Cancel!",
+                                });
+                            }
+                        },
+                    });
+                } else {
+                    $('#regForm').addClass('was-validated');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@* <h1>RegisterProject</h1>
+
+<h4>ProjectViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegisterProject">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProjectName" class="control-label"></label>
+                <input asp-for="ProjectName" class="form-control" />
+                <span asp-validation-for="ProjectName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProjectCompanyName" class="control-label"></label>
+                <input asp-for="ProjectCompanyName" class="form-control" />
+                <span asp-validation-for="ProjectCompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+ *@
+

@@ -3,6 +3,7 @@ using CRM.Models.Dto;
 using CRM.Models.Registration;
 using CRM.Repositories.AdminRepository;
 using CRM.Repositories.EmployeeRepository;
+using CRM.Repositories.ProjectRepository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.CodeDom;
@@ -15,22 +16,50 @@ namespace CRM.Controllers
     {
         private readonly IEmployeeRepo employeeRepo;
         private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IProjectRepo projectRepo;
 
-        public EmployeeController(IEmployeeRepo employeeRepo, IWebHostEnvironment webHostEnvironment)
+        public EmployeeController(IEmployeeRepo employeeRepo, IWebHostEnvironment webHostEnvironment, IProjectRepo projectRepo)
         {
             this.employeeRepo = employeeRepo;
             this.webHostEnvironment = webHostEnvironment;
+            this.projectRepo = projectRepo;
         }
 
         [HttpGet]
-        public IActionResult EmployeeDashBoard()
+        public async Task<IActionResult> EmployeeDashBoard()
         {
-            return View();
+            
+           
+            try
+            {
+                var LoginuserIdd = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userExists = employeeRepo.EmployeeUserIdExists(LoginuserIdd!);
+                if (userExists)
+                {
+                    var employee = await employeeRepo.GetEmployeeDetails(LoginuserIdd!);
+                    return View(employee);
+                }
+                else
+                {
+                    return NotFound();
+                }
+                
+            }
+            catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
+           
         }
 
         [HttpGet]
         public IActionResult EmployeeRegistration()
         {
+            var LoginuserIdd = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userExists = employeeRepo.EmployeeUserIdExists(LoginuserIdd!);
+            if (userExists)
+            {
+                return RedirectToAction("EmployeeDashBoard", "Employee");
+            }
             return View();
         }
 
@@ -88,8 +117,9 @@ namespace CRM.Controllers
                         PhotoPath = FileLocation,
                         Email = evm.Email,
                         Emp_UserId = LoginuserId,
-                        JoiningDate = evm.JoiningDate,
-                        EmployeeDesignation = evm.EmployeeDesignation
+                        JoiningDate = joinDate,
+                        EmployeeDesignation = evm.EmployeeDesignation,
+                        EmployeeAddress = evm.EmployeeAddress
                       
 
 
@@ -116,7 +146,7 @@ namespace CRM.Controllers
         //upload photo
         private string UploadFile(EmployeeViewModel evm)
         {
-            string filename = null;
+            string filename = null!;
             if (evm.EmployeePhoto != null && evm.EmployeePhoto.Length < 1048576)
             {
                 string filedir = Path.Combine(webHostEnvironment.WebRootPath, "Images");
@@ -130,6 +160,56 @@ namespace CRM.Controllers
             return filename;
         }
 
+        //get employee ongoing projects
+        public async Task<IActionResult> EmpOngoingProjects()
+        {
+            try
+            {
+                var LoginuserIdd = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var projects = await projectRepo.GetEmployeeOngoingProjects(LoginuserIdd!);
+                if(projects.Any())
+                {
+                    return View(projects);
+                }
+                else
+                {
+                    return RedirectToAction("NoProjectForEmployee");
+                }
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
+        }
+
+        //get employee completed projects
+
+        public async Task<IActionResult> EmpCompletedProjects()
+        {
+            try
+            {
+                var LoginuserIdd = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var projects = await projectRepo.GetEmployeeCompletedProjects(LoginuserIdd!);
+                if(projects.Any())
+                {
+                    return View(projects);
+                }
+                else
+                {
+                    return RedirectToAction("NoProjectForEmployee");
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        public IActionResult NoProjectForEmployee()
+        {
+            return View();
+        }
 
     }
 }
